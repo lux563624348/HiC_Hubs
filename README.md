@@ -16,7 +16,6 @@ ON Jan/11/2021, only a demo is included.
 - [Installation Guide](#installation-guide)
 - [Example of Running](#Example_Running)
 - [License](#license)
-- [Issues](https://github.com/neurodata/mgcpy/issues)
 
 ## Overview
 xxx is a Python package containing tools for network analysis of HiC data.
@@ -84,13 +83,13 @@ chr10	95890000	96030000	chr10:95890000-96030000	14	0.00015075762147303865
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [xx.md](https:xx) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
 ## Authors
 
-* *Xiang Li *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* *Xiang Li *Initial work* 
 
 
 ## License
@@ -101,5 +100,4 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 * Hat tip to anyone who's code was used
 * Inspiration
-* etc
 
