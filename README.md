@@ -57,7 +57,9 @@ Input Format: HiC Interaction in txt format
 10	3000000	3010000	100	200
 ```
 
-EXAMPLE: python igraph_hub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+EXAMPLE: 
+```
+python igraph_hub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
 ```
 
 Options:
@@ -77,7 +79,6 @@ chr10	20930000	21060000	chr10:20930000-21060000	11	7.88966007260005e-09
 chr10	19590000	19720000	chr10:19590000-19720000	11	7.809766623341443e-05
 chr10	80210000	80340000	chr10:80210000-80340000	11	9.520611432439225e-05
 chr10	95890000	96030000	chr10:95890000-96030000	14	0.00015075762147303865
-
 ```
 ## Built With
 
