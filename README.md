@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 # Comprehensive Network Analysis for HiC
 
 <br><br>
-<img src="resolving_traff_lx.gif" width="800">
+<img src="image/Hub_Myb.PNG" width="800">
 <br><br>
 
 
