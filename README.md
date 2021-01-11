@@ -9,14 +9,13 @@ One Paragraph of project description goes here
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
 
 ### Prerequisites
 python 3 
-packages: optparse, pandas, numpy, pybedtools, igraph, scipy
 
 ```
-Give examples
+Packages: optparse, pandas, numpy, pybedtools, igraph, scipy
 ```
 
 ### Installing
@@ -24,7 +23,7 @@ Give examples
 Recommend to use bioconda for installing.
 
 ```
-until finished
+https://bioconda.github.io/user/install.html
 ```
 
 
@@ -48,28 +47,9 @@ Options:
   -d <float>, --filtered_density=<float>
                         Density cutoff for hub shriking.
 
-### Break down into end to end tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
-
 
 ## Contributing
 
@@ -94,6 +74,3 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * Inspiration
 * etc
 
-=======
-# HiC_Hubs
->>>>>>> 1f58581f96c90768a77740df466c2833a4b970a1
