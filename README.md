@@ -29,25 +29,21 @@ https://bioconda.github.io/user/install.html
 
 ## Running the tests
 
+```
 EXAMPLE: python igraph_hub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
-
+```
 Collect HiC Interaction in txt format, rank interaction change Hub. Input
 Format should be: #chr        bin1    bin2    Cond1   Cond2
 
 Options:
+```
   -h, --help            show this help message and exit
-  -i <file>, --in=<file>
-                        Path to Input HiC file in txt format
-  -f <str>, --foreground_name=<str>
-                        Name of condition as foreground.
-  -b <str>, --background_name=<str>
-                        Name of condition as background.
-  -r <int>, --resolution=<int>
-                        Resolution of HiC txt
-  -d <float>, --filtered_density=<float>
-                        Density cutoff for hub shriking.
-
-
+  -i <file>, --in=<file> Path to Input HiC file in txt format
+  -f <str>, --foreground_name=<str> Name of condition as foreground.
+  -b <str>, --background_name=<str> Name of condition as background.
+  -r <int>, --resolution=<int>      Resolution of HiC txt
+  -d <float>, --filtered_density=<float> Density cutoff for hub shriking.
+```
 
 ## Built With
 
