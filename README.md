@@ -20,6 +20,7 @@ ON Jan/11/2021, only a demo is included.
 
 ## Overview
 xxx is a Python package containing tools for network analysis of HiC data.
+From HiC Interactions, clustering and ranking interaction change among all clustering.
 
 ## Documentation
 The official documentation with usage is under development.
@@ -49,13 +50,15 @@ https://bioconda.github.io/user/install.html
 ```
 
 
-## Running the tests
-
+## Example of Running
+Input Format: HiC Interaction in txt format
 ```
+#chr	bin1	bin2	Cond1	Cond2
+10	3000000	3010000	100	200
+```
+
 EXAMPLE: python igraph_hub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
 ```
-Collect HiC Interaction in txt format, rank interaction change Hub. Input
-Format should be: #chr        bin1    bin2    Cond1   Cond2
 
 Options:
 ```
@@ -83,8 +86,6 @@ chr10	95890000	96030000	chr10:95890000-96030000	14	0.00015075762147303865
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
