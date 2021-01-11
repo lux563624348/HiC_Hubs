@@ -1,3 +1,8 @@
+# NOTE: This software is under development.
+ON Jan/11/2021, only a demo is included. 
+
+
+
 # Comprehensive Network Analysis for HiC
 
 <br><br>
@@ -5,20 +10,37 @@
 <br><br>
 
 
-One Paragraph of project description goes here
+- [Overview](#overview)
+- [Documentation](#documentation)
+- [System Requirements](#system-requirements)
+- [Installation Guide](#installation-guide)
+- [Example of Running](#Example_Running)
+- [License](#license)
+- [Issues](https://github.com/neurodata/mgcpy/issues)
 
-## Getting Started
+## Overview
+xxx is a Python package containing tools for network analysis of HiC data.
 
+## Documentation
+The official documentation with usage is under development.
 
+## System Requirements
+### Hardware Requirements
+This package requires only a standard computer with enough RAM to support the in-memory operations.
+### Software Requirements
 
-### Prerequisites
-python 3 
-
+xxx mainly depends on the Python scientific stack.
 ```
-Packages: optparse, pandas, numpy, pybedtools, igraph, scipy
+python 3
+optparse
+pandas
+numpy
+pybedtools
+igraph
+scipy
 ```
 
-### Installing
+## Installation Guide
 
 Recommend to use bioconda for installing.
 
@@ -45,6 +67,15 @@ Options:
   -d <float>, --filtered_density=<float> Density cutoff for hub shriking.
 ```
 
+Output of Hubs:
+```
+0	1	2	hub_name	Num_vertices	pvalue
+chr10	20930000	21060000	chr10:20930000-21060000	11	7.88966007260005e-09
+chr10	19590000	19720000	chr10:19590000-19720000	11	7.809766623341443e-05
+chr10	80210000	80340000	chr10:80210000-80340000	11	9.520611432439225e-05
+chr10	95890000	96030000	chr10:95890000-96030000	14	0.00015075762147303865
+
+```
 ## Built With
 
 ## Contributing
