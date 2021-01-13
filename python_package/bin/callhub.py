@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ########################################################################
 ## 01/11/2020
 ## By Xiang Li,
@@ -9,12 +10,14 @@
 #python ${EXE_PATH} -b ${INPUT_FILE} -c ${INPUT_NAME} -k ${GENE_LIST_FOLDER}/${GENELISTFILE} -l ${GENELISTFILE: :-4} -r ${RESOLUTION} -f ${FRAGMENTSIZE} -g ${GTFFILE} \
 #	-w ${WINDOWSIZE} -n ${NORMALIZATION} -t ${REGIONTYPE} -u ${UP_EXTENSION} -d ${DOWN_EXTENSION} -o ${OUTPUTDIR} -p ${Genic_Partition}
 ########################################################################
-from optparse import OptionParser
+
 import pandas as pd
 import numpy as np
+import igraph as ig
 from pybedtools import BedTool
-from igraph import *
 from scipy import stats
+from optparse import OptionParser
+import sys
 ####################################################################################
 ## FUNCTIONS
 ### FUNCTION
@@ -24,7 +27,7 @@ def convert_loops_to_graph(df_loops, weight_col, _extra_edge_col):
     df_bins['name'] = df_bins['#chr1'].astype(int).astype(str)+':'+df_bins['x1'].astype(int).astype(str)+'-'+df_bins['x2'].astype(int).astype(str)
     Num_vs = len(df_bins.index)
     ## Initiation a graph from loops file 
-    graph = Graph()
+    graph = ig.Graph()
     graph.add_vertices(Num_vs)
     graph.vs["name"] = df_bins.loc[:,'name']
     

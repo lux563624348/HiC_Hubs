@@ -1,0 +1,5 @@
+pandas
+numpy
+pybedtools
+scipy
+python-igraph>=0.8.0

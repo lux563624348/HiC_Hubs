@@ -31,12 +31,12 @@ This package requires only a standard computer with enough RAM to support the in
 
 xxx mainly depends on the Python scientific stack.
 ```
-python 3
+python <=3.3
 optparse
 pandas
 numpy
 pybedtools
-python-igraph
+igraph
 scipy
 ```
 
