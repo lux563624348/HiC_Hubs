@@ -1,7 +1,5 @@
 # NOTE: This software is under development.
-ON Jan/11/2021, only a demo is included. 
-
-
+Latest updated on Jan/14/2021, 
 
 # Comprehensive Network Analysis for HiC
 
@@ -18,21 +16,23 @@ ON Jan/11/2021, only a demo is included.
 - [License](#license)
 
 ## Overview
-xxx is a Python package containing tools for network analysis of HiC data.
-From HiC Interactions, clustering and ranking interaction change among all clustering.
+HicHub is a Python package containing tools for network analysis of HiC data.
+It starts from HiC Interaction pairs, then generating network and clustering. Finally ranking all clusters by their interaction change.
 
 ## Documentation
 The official documentation with usage is under development.
 
 ## System Requirements
 ### Hardware Requirements
+
 This package requires only a standard computer with enough RAM to support the in-memory operations.
+
 ### Software Requirements
 
-xxx mainly depends on the Python scientific stack.
+HicHub mainly depends on the Python scientific stack.
+
 ```
-python 3
-optparse
+python <=3.3
 pandas
 numpy
 pybedtools
@@ -43,12 +43,14 @@ scipy
 ## Installation Guide
 Recommend to use bioconda for installing.
 ```
+python3 -m pip install hichub --user
+python3 -m pip install numpy optparse pandas pybedtools python-igraph scipy
+```
+```
 https://bioconda.github.io/user/install.html
 ```
 Or
-```
-pip install numpy optparse pandas pybedtools igraph scipy
-```
+
 
 ## Example of Running (Demo)
 Input Format: HiC Interaction in txt format.
