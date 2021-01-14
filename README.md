@@ -3,6 +3,9 @@ Latest updated on Jan/14/2021,
 
 # Comprehensive Network Analysis for HiC
 
+[![PyPI download](https://pypi.org/project/hichub/)](https://pypi.org/project/hichub/)
+
+
 <br><br>
 <img src="image/Hub_Myb.PNG" width="800">
 <br><br>
@@ -88,7 +91,7 @@ chr10	95890000	96030000	chr10:95890000-96030000	14	0.00015075762147303865
 
 ## Contributing
 
-Please read [xx.md](https:xx) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read (https:xx) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
@@ -103,6 +106,4 @@ Please read [xx.md](https:xx) for details on our code of conduct, and the proces
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
 
