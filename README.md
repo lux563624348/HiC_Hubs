@@ -3,7 +3,7 @@ Latest updated on Jan/14/2021,
 
 # Comprehensive Network Analysis for HiC
 
-[![PyPI download](https://pypi.org/project/hichub/)](https://pypi.org/project/hichub/)
+[![PyPI download](<img src="image/Hub_Myb.PNG" width="800">)](https://pypi.org/project/hichub/)
 
 
 <br><br>
