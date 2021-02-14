@@ -1,5 +1,5 @@
 # NOTE: This software is under development.
-Latest updated on Jan/14/2021, 
+Latest updated on Feb/14/2021, 
 
 # Comprehensive Network Analysis for HiC
 
@@ -23,7 +23,7 @@ HicHub is a Python package containing tools for network analysis of HiC data.
 It starts from HiC Interaction pairs, then generating network and clustering. Finally ranking all clusters by their interaction change.
 
 ## Documentation
-The official documentation with usage is under development.
+The official documentation is under development.
 
 ## System Requirements
 ### Hardware Requirements
@@ -43,6 +43,8 @@ python-igraph
 scipy
 ```
 
+If you want to convert .hic to input file faster, please install strawC. Detail: https://github.com/aidenlab/straw
+
 ## Installation Guide
 Recommend to use bioconda for installing.
 ```
@@ -58,6 +60,9 @@ Or
 ## Example of Running (Demo)
 Input Format: HiC Interaction in txt format.
 Example of test data can be found in ~/test_data
+%% Convert .hic to required input format
+python convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
+
 
 ```
 #chr	bin1	bin2	Cond1	Cond2
@@ -66,7 +71,10 @@ Example of test data can be found in ~/test_data
 
 EXAMPLE: 
 ```
+%% Find hub by shrinked algorithm
 python igraph_hub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+%% Find Interaction Change (Pyramid & Stripe)
+python call_diff_regions.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -g 2
 ```
 
 Options:
@@ -77,6 +85,7 @@ Options:
   -b <str>, --background_name=<str> Name of condition as background.
   -r <int>, --resolution=<int>      Resolution of HiC txt
   -d <float>, --filtered_density=<float> Density cutoff for hub shriking.
+  -g <int>, --gap_size=<int> Gap Size to stitch adjacent node
 ```
 
 Output of Hubs:
