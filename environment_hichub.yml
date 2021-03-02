@@ -1,4 +1,4 @@
-name: hichub2
+name: hichub
 channels:
   - bioconda
   - r
@@ -56,8 +56,7 @@ dependencies:
   - pip:
     - backcall==0.2.0
     - decorator==4.4.2
-    - hichub==0.0.6
-    - igraph==0.1.11
+    - hichub==0.0.7
     - ipython==7.21.0
     - ipython-genutils==0.2.0
     - jedi==0.18.0
