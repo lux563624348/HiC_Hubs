@@ -20,8 +20,11 @@ Latest updated on Feb/14/2021,
 - [License](#license)
 
 ## Overview
-This module is a Python package containing tool for network analysis of HiC data.
+HicHub is a Python package containing tools for network analysis of HiC data.
 It starts from HiC Interaction pairs, then generating network and clustering. Finally ranking all clusters by their interaction change.
+
+## Documentation
+The official documentation is under development.
 
 ## System Requirements
 ### Hardware Requirements
@@ -70,7 +73,9 @@ python convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
 EXAMPLE: 
 ```
 %% Find hub by shrinked algorithm
-python callhub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+python igraph_hub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+%% Find Interaction Change (Pyramid & Stripe)
+python call_diff_regions.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -g 2
 ```
 
 Options:

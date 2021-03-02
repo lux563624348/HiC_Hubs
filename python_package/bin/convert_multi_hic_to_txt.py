@@ -14,9 +14,9 @@
 import pandas as pd
 import os
 import struct
-import strawC
 from optparse import OptionParser
 import sys
+import straw
 ####################################################################################
 ## FUNCTIONS
 def readcstr(f):
@@ -77,24 +77,60 @@ def read_header(req):
         res = struct.unpack(b'<i', req.read(4))[0]
         resolutions.append(res)
     return chrs, resolutions, metadata
+    
+def HiC_Matrix_to_Txt(_NORM, _hic, _cond, _resolution, _chr, _cut_off):
+    
+    result = straw.straw(_NORM, _hic, _chr, _chr, 'BP', _resolution)
+    if (_NORM=='NONE'):
+        df_tem = pd.DataFrame(data={'bin1':result[0],'bin2':result[1], _cond:result[2]})
+        df_tem = df_tem[(df_tem.bin1!=df_tem.bin2)&(df_tem.loc[:, _cond]>_cut_off)]
+        df_tem.loc[:, _cond] = 10**6*df_tem.loc[:, _cond] / df_tem.loc[:, _cond].sum()
+    else:
+        df_tem = pd.DataFrame(data={'bin1':result[0],'bin2':result[1], _cond:result[2]})
+        df_tem = df_tem[(df_tem.bin1!=df_tem.bin2)]
+    
+    df_tem.loc[:, _cond] = round(df_tem.loc[:, _cond],2)
+    return df_tem
+
+def Multi_Input_Matrix_to_Txt(_Norm, _hics, _conds, _resolution):
+    
+    Out_Name = 'Summary_'+_Norm+'_'+'_'.join(_conds)+'_Dense_Matrix.txt'
+    df_hic = pd.DataFrame(columns=['#chr','bin1','bin2']+_conds).to_csv(Out_Name, sep='\t',
+                                                                      header=True, index=None)
+    req = open(_hics[0], mode='rb')
+    chrs, resolutions, metadata = read_header(req)
+    for idx in chrs:
+        chr_idx = str(chrs[idx][1])#.replace('chr','')
+        if(chr_idx not in {'ALL','All', 'chrM','M'}):
+            df_hic = pd.DataFrame(columns=['bin1','bin2'])
+            for cond, hic in zip(_conds, _hics):
+                df_hic_tem = HiC_Matrix_to_Txt(_Norm, hic, cond, _resolution, chr_idx, 3)
+                df_hic = df_hic.merge(df_hic_tem, on=['bin1','bin2'], how='outer')
+                
+            df_hic.insert(loc=0, column='#chr', value=chr_idx)
+            df_hic.to_csv(Out_Name, sep='\t', mode='a', header=False, index=None)
+    return None
+
 ### FUNCTION
 ####################################################################################
 ### FUNCTION
 ### FUNCTIONS
 def main(argv):
-	desc="Convert .hic to pair txt format --> Format should be: #chr	bin1	bin2	Count"
+	desc="Convert multi .hic to txt format --> Format should be: #chr	bin1	bin2	Count"
 	parser = OptionParser(description=desc)
 	parser.add_option("-i", "--in", action="store", type="string",
 			dest="input_path", help="Path to Input HiC file in txt format", metavar="<file>")
 	parser.add_option("-n", "--norm", action="store", type="string",
 			dest="norm_hic", help="Norm of File.", metavar="<str>")
 	parser.add_option("-f", "--file_name", action="store", type="string",
-			dest="file_name", help="Name of File.", metavar="<str>")
+			dest="file_name", help="Name of File. Delimiter ',', for example 'file1,file2' ", metavar="<str>")
+	parser.add_option("-l", "--file_label", action="store", type="string",
+			dest="file_label", help="Name of File.Delimiter ',', for example 'label1,label2'", metavar="<str>")
 	parser.add_option("-r", "--resolution", action="store", type="int",
 		dest="res", help="Resolution of HiC txt", metavar="<int>")
 
 	(opt, args) = parser.parse_args(argv)
-	if len(argv) < 4:
+	if len(argv) < 5:
 		parser.print_help()
 		sys.exit(1)
 	
@@ -102,6 +138,7 @@ def main(argv):
 	print ("Here is the Summary of your input.")
 	print ("Input Path of HiC file in .hic format: %s" % opt.input_path)
 	print ("Name of Input File: %s" % opt.file_name)
+	print ("Label of Input File: %s" % opt.file_label)
 	print ("Norm of Input File: %s" % opt.norm_hic)
 	print ("Resolution %i" % opt.res)
 	print ("End of Summary.")
@@ -109,33 +146,14 @@ def main(argv):
 	
 	## parameters
 	PATH_INPUT = opt.input_path
-	file_name = opt.file_name
-	Norm_File = opt.norm_hic  ## "KR" or "NONE"
+	os.chdir(PATH_INPUT)
+	File_Name_Sets = opt.file_name.split(',')
+	File_Label_Sets = opt.file_label.split(',')
+	Norm_Meths = opt.norm_hic  ## "KR" or "NONE"
 	resolution = opt.res
 
-
 #### Main 
-	PATH_File= PATH_INPUT+file_name
-	req = open(PATH_File, mode='rb')
-	chrs, resolution_out, metadata = read_header(req)
-	
-	print ("Resolution of input data " + str(resolution_out) )
-	
-	Out_Name = 'Summary_res'+'str(resolution_out)'+file_name[:-4]+'_Dense_Matrix.txt'
-	
-	pd.DataFrame(columns=['#chr','bin1','bin2', file_name[:-4]]).to_csv(Out_Name, sep='\t',header=True, index=None)
-		## [0, 'ALL', 2725521]   [1, '1', 195471971]
-	HiC_data = list()
-	for idx in chrs:
-		chr_idx = str(chrs[idx][1])
-		if(chr_idx!='ALL'):
-			#result = strawC.strawC(Norm_File, PATH_File, chr_idx, chr_idx, 'BP', resolution)
-			result = strawC.strawC(Norm_File, PATH_File, chr_idx, chr_idx, 'BP', resolution)
-			for i in range(len(result)):
-				HiC_data.append([chr_idx, result[i].binX, result[i].binY, result[i].counts])
-
-		df_hic = pd.DataFrame(data=HiC_data, columns=[0,1,2,file_name[:-4]])
-		df_hic.dropna().to_csv(Out_Name, mode='a', sep='\t', index=None, header=False)
+	Multi_Input_Matrix_to_Txt(Norm_Meths, File_Name_Sets, File_Label_Sets, resolution)
 #### First GeneBoydy
 
 
