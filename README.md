@@ -58,7 +58,7 @@ Or
 Input Format: HiC Interaction in txt format.
 Example of test data can be found in ~/test_data
 %% Convert .hic to required input format
-python convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
+python3 convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
 
 
 ```
@@ -71,7 +71,7 @@ EXAMPLE:
 %% Find hub by shrinked algorithm
 callhub.py -i chr10_test.bed -f WT_na -b DKO_na -r 10000 -d 0.5
 or (if callhub.py was not found in your path, please download this git and ./bin/callhub.py )
-python3 ./bin/callhub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+python3 ./bin/callhub.py -i chr10_test.bed -f WT_na -b DKO_na -r 10000 -d 0.5
 ```
 
 Options:
@@ -89,8 +89,10 @@ Options:
                         Density cutoff for hub shriking.
 ```
 
-Output of Hubs:
+Output can be found at working directory: 
+(Demo output is: /HiC_Hubs/python_package/tests/2704_DKO_na_Diff_hub.txt  or 3106_WT_na_Diff_hub.txt)
 ```
+3106_WT_na_Diff_hub.txt
 0	1	2	hub_name	Num_vertices	pvalue
 chr10	20930000	21060000	chr10:20930000-21060000	11	7.88966007260005e-09
 chr10	19590000	19720000	chr10:19590000-19720000	11	7.809766623341443e-05
