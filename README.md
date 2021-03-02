@@ -1,10 +1,7 @@
-# NOTE: 
-For Paper Review, please follow the instruction below:
+# NOTE: For Paper Review, please follow the instruction below:
 Latest updated on Feb/14/2021,
 
 # Comprehensive Network Analysis for HiC
-
-[![PyPI download](image/pypi.PNG)](https://pypi.org/project/hichub/)
 
 
 <br><br>
@@ -46,7 +43,7 @@ If you want to convert .hic to input file faster, please install strawC. Detail:
 ## Installation Guide
 Recommend to use bioconda for installing.
 ```
-python3 -m pip install hichub --user
+python3 -m pip install hichub=0.0.6 --user
 python3 -m pip install numpy optparse pandas pybedtools python-igraph scipy
 ```
 ```
@@ -70,7 +67,9 @@ python convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
 EXAMPLE: 
 ```
 %% Find hub by shrinked algorithm
-python callhub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+callhub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+or (if callhub.py was not found in your path, please download this git and ./bin/callhub.py )
+python3 ./bin/callhub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
 ```
 
 Options:
