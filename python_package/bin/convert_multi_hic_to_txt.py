@@ -79,19 +79,12 @@ def read_header(req):
     return chrs, resolutions, metadata
     
 def HiC_Matrix_to_Txt(_NORM, _hic, _cond, _resolution, _chr, _cut_off):
-    
     result = straw.straw(_NORM, _hic, _chr, _chr, 'BP', _resolution)
-    if (_NORM=='NONE'):
-        df_tem = pd.DataFrame(data={'bin1':result[0],'bin2':result[1], _cond:result[2]})
-        df_tem = df_tem[(df_tem.bin1!=df_tem.bin2)&(df_tem.loc[:, _cond]>_cut_off)]
-        df_tem.loc[:, _cond] = 10**6*df_tem.loc[:, _cond] / df_tem.loc[:, _cond].sum()
-    else:
-        df_tem = pd.DataFrame(data={'bin1':result[0],'bin2':result[1], _cond:result[2]})
-        df_tem = df_tem[(df_tem.bin1!=df_tem.bin2)]
-    
-    df_tem.loc[:, _cond] = round(df_tem.loc[:, _cond],2)
+    df_tem = pd.DataFrame(data={'bin1':result[0],'bin2':result[1], _cond:result[2]})  
+    df_tem = df_tem[df_tem.loc[:, _cond] > _cut_off]
+    #df_tem.loc[:, _cond] = round(10**6*df_tem.loc[:, _cond] /  df_tem[(df_tem.bin1==df_tem.bin2)].loc[:, _cond].sum(),2)
     return df_tem
-
+    
 def Multi_Input_Matrix_to_Txt(_Norm, _hics, _conds, _resolution):
     
     Out_Name = 'Summary_'+_Norm+'_'+'_'.join(_conds)+'_Dense_Matrix.txt'
