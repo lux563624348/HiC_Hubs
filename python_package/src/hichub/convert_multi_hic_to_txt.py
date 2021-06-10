@@ -108,6 +108,28 @@ def Multi_Input_Matrix_to_Txt(_Norm, _hics, _conds, _resolution):
 ####################################################################################
 ### FUNCTION
 ### FUNCTIONS
+def run(opt):
+	PATH_INPUT = opt.input_path
+	os.chdir(PATH_INPUT)
+	File_Name_Sets = opt.file_name.split(',')
+	File_Label_Sets = opt.file_label.split(',')
+	Norm_Meths = opt.norm_hic  ## "KR" or "NONE"
+	resolution = opt.res
+	
+	print (" ")
+	print ("Here is the Summary of your input.")
+	print ("Input Path of HiC file in .hic format: %s" % opt.input_path)
+	print ("Name of Input File: %s" % opt.file_name)
+	print ("Label of Input File: %s" % opt.file_label)
+	print ("Norm of Input File: %s" % opt.norm_hic)
+	print ("Resolution %i" % opt.res)
+	print ("End of Summary.")
+	print (" ")
+
+#### Main 
+	Multi_Input_Matrix_to_Txt(Norm_Meths, File_Name_Sets, File_Label_Sets, resolution)
+	return None
+
 def main(argv):
 	desc="Convert multi .hic to txt format --> Format should be: #chr	bin1	bin2	Count"
 	parser = OptionParser(description=desc)

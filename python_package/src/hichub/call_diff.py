@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 ########################################################################
-## 02/08/2020
+## 02/08/2021
 ## By Xiang Li,
 ## lux@gwu.edu
 ## Peng's Lab
@@ -279,7 +279,8 @@ def multi_task(_chr_name, _df_chr, _col_fore, _col_back,  _resolution):
     return None
 
 def Multi_Main_For_Diff_Regions(_PATH_interaction, _col_fore, _col_back,  _resolution, _num_threads=1):
-    if __name__=='__main__':
+    #if __name__=='__main__':
+    if True:
         PATH_interaction = _PATH_interaction
         df_tem = pd.read_csv(PATH_interaction, sep='\t')
         col_fore=_col_fore
@@ -310,6 +311,33 @@ def Multi_Main_For_Diff_Regions(_PATH_interaction, _col_fore, _col_back,  _resol
 ####################################################################################
 ### FUNCTION
 ### FUNCTIONS
+def run(argv):
+	## parameters
+	PATH_INPUT=argv.input_path
+	col_fore = argv.fore_name
+	col_back  = argv.back_name
+	resolution = argv.res
+	num_threads=argv.thread
+	
+	print (" ")
+	print("Run main")
+	print ("Here is the Summary of your input.")
+	print ("Input Path of HiC file in txt format: %s" % PATH_INPUT)
+	print ("Foreground Condition: %s" % col_fore)
+	print ("Background Condition: %s" % col_back)
+	print ("Resolution %i" % resolution)
+	print ("Number of threads used is: %i" % num_threads)
+	print ("End of Summary.")
+	print (" ")
+	
+#### Main 
+	Multi_Main_For_Diff_Regions(PATH_INPUT, col_fore, col_back, resolution, num_threads)
+	
+	Multi_Main_For_Diff_Regions(PATH_INPUT, col_back, col_fore, resolution, num_threads)
+
+	print(" ")
+	return None
+
 def main(argv):
 	desc="Collect HiC Interaction in txt format, rank interaction change Hub. Input Format should be: #chr	bin1	bin2	Cond1	Cond2"
 	parser = OptionParser(description=desc)
@@ -329,23 +357,24 @@ def main(argv):
 		parser.print_help()
 		sys.exit(1)
 	
-	print (" ")
-	print ("Here is the Summary of your input.")
-	print ("Input Path of HiC file in txt format: %s" % opt.input_path)
-	print ("Foreground Condition: %s" % opt.fore_name)
-	print ("Background Condition: %s" % opt.back_name)
-	print ("Resolution %i" % opt.res)
-	print ("Number of threads used is: %i" % opt.thread)
-	print ("End of Summary.")
-	print (" ")
-	
 	## parameters
 	PATH_INPUT=opt.input_path
 	col_fore = opt.fore_name
 	col_back  = opt.back_name
 	resolution = opt.res
-
 	num_threads=opt.thread
+	print (" ")
+	print("Run main")
+	print ("Here is the Summary of your input.")
+	print ("Input Path of HiC file in txt format: %s" % PATH_INPUT)
+	print ("Foreground Condition: %s" % col_fore)
+	print ("Background Condition: %s" % col_back)
+	print ("Resolution %i" % resolution)
+	print ("Number of threads used is: %i" % num_threads)
+	print ("End of Summary.")
+	print (" ")
+	
+
 
 #### Main 
 	Multi_Main_For_Diff_Regions(PATH_INPUT, col_fore, col_back, resolution, num_threads)
