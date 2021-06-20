@@ -17,6 +17,8 @@ import igraph as ig
 from scipy import stats
 from optparse import OptionParser
 import sys, os, multiprocessing
+from gooey import Gooey
+@Gooey
 ####################################################################################
 ## FUNCTIONS
 ### FUNCTION
@@ -231,10 +233,11 @@ def Return_Pvalue_For_Given_Graph(_df_region, _resolution, _matrix):
 
     return pd.DataFrame(data=pvalue_region, columns=['reg1', 'reg2', '-log10(pvalue)']).sort_values('-log10(pvalue)', ascending=False)
 
-def Main_For_Diff_Regions(df_hic, _col_fore, _col_back,  _resolution):
+def Main_For_Diff_Regions(df_hic, _col_fore, _col_back,  _resolution, _pvalue):
     #Create a weight basing on logFC (logFC < 0)
     _gapsize=2  ## this parameter is try to avoid blank due to artifacts
     logfc_cutoff=0
+    cut_pvalue=-np.log10(_pvalue)
     _df_hic = df_hic
     _df_hic[_col_fore+'_weight'] = _df_hic[_col_fore]*_df_hic.log_FC.apply(lambda x: 1 if x > logfc_cutoff else(0))  
     Norm_window_Size=0 ### To be optimized for boundary
@@ -265,20 +268,21 @@ def Main_For_Diff_Regions(df_hic, _col_fore, _col_back,  _resolution):
                 Diff_matrix = Return_Sorted_Adjacency_Matrix(graph_tem, 'diff')# Fore_matrix-Back_matrix
                 df_out = df_out.append(Return_Pvalue_For_Given_Graph(df_hubs, _resolution, Diff_matrix))
     df_out = df_out.sort_values(by='-log10(pvalue)', ascending=False)
-    df_out = df_out[df_out['-log10(pvalue)']>5]
+    df_out = df_out[df_out['-log10(pvalue)']>cut_pvalue]
     #df_out.to_csv(str(len(df_out))+'_'+_col_back+'_'+_col_fore+'_specific_regions.bed', sep='\t', index=None)
     df_out.to_csv(_col_back+'_'+_col_fore+'_specific_regions.bed', sep='\t', mode='a', header=False, index=None)
     return None
 
-def multi_task(_chr_name, _df_chr, _col_fore, _col_back,  _resolution):
+def multi_task(_chr_name, _df_chr, _col_fore, _col_back,  _resolution, _pvalue):
     col_fore=_col_fore
     col_back=_col_back
     resolution = _resolution
+    pvalue = _pvalue
     df_chr = Norm_df_hic(_df_chr, col_fore, col_back, resolution)
-    Main_For_Diff_Regions(df_chr, col_fore, col_back, resolution)
+    Main_For_Diff_Regions(df_chr, col_fore, col_back, resolution, pvalue)
     return None
 
-def Multi_Main_For_Diff_Regions(_PATH_interaction, _col_fore, _col_back,  _resolution, _num_threads=1):
+def Multi_Main_For_Diff_Regions(_PATH_interaction, _col_fore, _col_back,  _resolution, _pvalue, _num_threads=1):
     #if __name__=='__main__':
     if True:
         PATH_interaction = _PATH_interaction
@@ -296,7 +300,7 @@ def Multi_Main_For_Diff_Regions(_PATH_interaction, _col_fore, _col_back,  _resol
         for df_group in df_groups:
             chr_name = df_group[0]
             df_hic_chr = df_group[1]
-            pool.apply_async(multi_task, args=(chr_name, df_hic_chr, col_fore, col_back,  resolution))
+            pool.apply_async(multi_task, args=(chr_name, df_hic_chr, col_fore, col_back, resolution, _pvalue))
         pool.close()
         pool.join()
         print('All subprocesses done.')
@@ -317,6 +321,7 @@ def run(argv):
 	col_fore = argv.fore_name
 	col_back  = argv.back_name
 	resolution = argv.res
+	pvalue=argv.pvalue
 	num_threads=argv.thread
 	
 	print (" ")
@@ -326,14 +331,14 @@ def run(argv):
 	print ("Foreground Condition: %s" % col_fore)
 	print ("Background Condition: %s" % col_back)
 	print ("Resolution %i" % resolution)
+	print ("Pvalue cutoff for output (diff hub) is: %s" % pvalue)
 	print ("Number of threads used is: %i" % num_threads)
 	print ("End of Summary.")
 	print (" ")
 	
 #### Main 
-	Multi_Main_For_Diff_Regions(PATH_INPUT, col_fore, col_back, resolution, num_threads)
-	
-	Multi_Main_For_Diff_Regions(PATH_INPUT, col_back, col_fore, resolution, num_threads)
+	Multi_Main_For_Diff_Regions(PATH_INPUT, col_fore, col_back, resolution, pvalue, num_threads)
+	Multi_Main_For_Diff_Regions(PATH_INPUT, col_back, col_fore, resolution, pvalue, num_threads)
 
 	print(" ")
 	return None
@@ -349,11 +354,13 @@ def main(argv):
 			dest="back_name", help="Name of condition as background.", metavar="<str>")
 	parser.add_option("-r", "--resolution", action="store", type="int",
 		dest="res", help="Resolution of HiC txt", metavar="<int>")
-	parser.add_option("-t", "--num_threads", action="store", type="int",
-		dest="thread", help="Num_threads", metavar="<int>")
+	parser.add_option("-p", "--pvalue", action="store", type="float", default =0.00001,
+		dest="pvalue", help="Optional: pvalue cutoff for output (diff hub)", metavar="<float>")
+	parser.add_option("-t", "--num_threads", action="store", type="int", default =1,
+		dest="thread", help="Optional: Number of threads to run, default=1", metavar="<int>")
 
 	(opt, args) = parser.parse_args(argv)
-	if len(argv) < 5:
+	if len(argv) < 4:
 		parser.print_help()
 		sys.exit(1)
 	
@@ -362,7 +369,9 @@ def main(argv):
 	col_fore = opt.fore_name
 	col_back  = opt.back_name
 	resolution = opt.res
+	pvalue=opt.pvalue
 	num_threads=opt.thread
+
 	print (" ")
 	print("Run main")
 	print ("Here is the Summary of your input.")
@@ -370,6 +379,7 @@ def main(argv):
 	print ("Foreground Condition: %s" % col_fore)
 	print ("Background Condition: %s" % col_back)
 	print ("Resolution %i" % resolution)
+	print ("Pvalue cutoff for output (diff hub) is: %s" % pvalue)
 	print ("Number of threads used is: %i" % num_threads)
 	print ("End of Summary.")
 	print (" ")
@@ -377,8 +387,8 @@ def main(argv):
 
 
 #### Main 
-	Multi_Main_For_Diff_Regions(PATH_INPUT, col_fore, col_back, resolution, num_threads)
-	Multi_Main_For_Diff_Regions(PATH_INPUT, col_back, col_fore, resolution, num_threads)
+	Multi_Main_For_Diff_Regions(PATH_INPUT, col_fore, col_back, resolution, pvalue, num_threads)
+	Multi_Main_For_Diff_Regions(PATH_INPUT, col_back, col_fore, resolution, pvalue, num_threads)
 
 	print(" ")
 #### First GeneBoydy

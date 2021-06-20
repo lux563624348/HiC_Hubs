@@ -26,6 +26,18 @@ def main():
 						)    
 	print("welcome")
 	print("The python env is: " + sys.version)
+	print("usage: hichub [-h] [-v] {test,diff,convert} ...")
+	print("hichub -- A toolset to detect and analyze differential Hubs")
+	print("positional arguments:")
+	print("  {test,diff,convert}  sub-command help")
+	print("    test               Output for test parser")
+	print("    diff               Parser for diff hubs")
+	print("    convert            Convert multi .hic to txt format --> Format should be:")
+	print("                       #chr bin1 bin2 Count")
+	print("optional arguments:")
+	print("  -h, --help           show this help message and exit")
+	print("  -v, --version        show program's version number and exit")
+
 	if (hasattr(args, 'outdir')):  # use a output directory to store HicHub output
 		if not os.path.exists( args.outdir ):
 			try:
@@ -153,9 +165,12 @@ def add_diff_parser( subparsers ):
 		
 	diff_parser_group.add_argument("-r", "--resolution", action="store", type=int, required = True,
 		dest="res", help="Resolution of HiC txt", metavar="<int>")
+	
+	diff_parser_group.add_argument("-p", "--pvalue", action="store", type=float, required = False,
+		default=0.00001, dest="pvalue", help="Optional: pvalue cutoff for output (diff hub)", metavar="<float>")
 		
-	diff_parser_group.add_argument("-t", "--num_threads", action="store", type=int, required = True,
-		dest="thread", help="Num_threads", metavar="<int>")
+	diff_parser_group.add_argument("-t", "--num_threads", action="store", type=int, required = False,
+		default=1, dest="thread", help="Optional: Number of threads to run, default=1", metavar="<int>")
 	
 	return 
 
