@@ -71,37 +71,28 @@ optional arguments:
 
 diff:
 ```
-usage: hichub diff [-h] -i <file> -f <str> -b <str> -r <int> [-p <float>]
-                   [-t <int>]
-hichub diff: error: the following arguments are required: -i/--in, -f/--foreground_name, -b/--background_name, -r/--resolution
-
-Input Format: HiC Interaction in txt format.
-Example of test data can be found in ~/test_data
-
-Output can be found at working directory: 
-(Demo output is: /HiC_Hubs/python_package/tests/2704_DKO_na_Diff_hub.txt  or 3106_WT_na_Diff_hub.txt)
-
+usage: hichub diff [-h] -i <file> -f <str> -b <str> -r <int> [-p <float>] [-t <int>]
+hichub diff --help 
+Input Format: HiC Interaction in txt format. Example of test data can be found in ~/test_data
+And the output can be found at working directory: 
+(Demo output is: 354_DKO_na_WT_na_specific_regions.bed or 318_WT_na_DKO_na_specific_regions.bed)
 ```
 
 convert:
 %% Convert .hic to required input format
 ```
 usage: hichub convert [-h] -i <file> [-n <str>] -f <str> -l <str> -r <int>
-hichub convert: error: the following arguments are required: -i/--in, -f/--file_name, -l/--file_label, -r/--resolution
-#Example:
-#chr	bin1	bin2	Cond1	Cond2
-10	3000000	3010000	100	200
+
+Exmaple of output: 
+reg1    reg2    -log10(pvalue)
+chr10:19570000-19850000 chr10:19570000-19850000 45.91186483627381
+chr10:20860000-21060000 chr10:20860000-21060000 41.129022601906215
+chr10:117030000-117140000       chr10:116870000-117010000       14.165
+chr10:95130000-95290000 chr10:95130000-95290000 9.80623027538454
+chr10:18970000-19160000 chr10:18970000-19160000 9.288099829570816
 ```
 
 
-```
-3106_WT_na_Diff_hub.txt
-0	1	2	hub_name	Num_vertices	pvalue
-chr10	20930000	21060000	chr10:20930000-21060000	11	7.88966007260005e-09
-chr10	19590000	19720000	chr10:19590000-19720000	11	7.809766623341443e-05
-chr10	80210000	80340000	chr10:80210000-80340000	11	9.520611432439225e-05
-chr10	95890000	96030000	chr10:95890000-96030000	14	0.00015075762147303865
-```
 
 ## Built With
 
@@ -113,7 +104,7 @@ Please read (https:xx) for details on our code of conduct, and the process for s
 
 ## Authors
 
-* *Xiang Li *Initial work* 
+* *Xiang Li  
 
 
 ## License
