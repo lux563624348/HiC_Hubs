@@ -1,10 +1,7 @@
-# NOTE: 
-For Paper Review, please follow the instruction below:
+# NOTE: For Paper Review, please follow the instruction below:
 Latest updated on Feb/14/2021,
 
 # Comprehensive Network Analysis for HiC
-
-[![PyPI download](image/pypi.PNG)](https://pypi.org/project/hichub/)
 
 
 <br><br>
@@ -20,11 +17,8 @@ Latest updated on Feb/14/2021,
 - [License](#license)
 
 ## Overview
-HicHub is a Python package containing tools for network analysis of HiC data.
+This module is a Python package containing tool for network analysis of HiC data.
 It starts from HiC Interaction pairs, then generating network and clustering. Finally ranking all clusters by their interaction change.
-
-## Documentation
-The official documentation is under development.
 
 ## System Requirements
 ### Hardware Requirements
@@ -48,9 +42,11 @@ If you want to convert .hic to input file faster, please install strawC. Detail:
 
 ## Installation Guide
 Recommend to use bioconda for installing.
+Create the environment from the environment_hichub.yml(Can be found in this repository) file:
 ```
+conda env create -f environment_hichub.yml
 python3 -m pip install hichub --user
-python3 -m pip install numpy optparse pandas pybedtools python-igraph scipy
+python3 -m pip install numpy pandas pybedtools python-igraph scipy
 ```
 ```
 https://bioconda.github.io/user/install.html
@@ -62,7 +58,7 @@ Or
 Input Format: HiC Interaction in txt format.
 Example of test data can be found in ~/test_data
 %% Convert .hic to required input format
-python convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
+python3 convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
 
 
 ```
@@ -73,24 +69,30 @@ python convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
 EXAMPLE: 
 ```
 %% Find hub by shrinked algorithm
-python igraph_hub.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -d 0.5
-%% Find Interaction Change (Pyramid & Stripe)
-python call_diff_regions.py -i chr10_WT_na-DKO_na.bed -f WT_na -b DKO_na -r 10000 -g 2
+callhub.py -i chr10_test.bed -f WT_na -b DKO_na -r 10000 -d 0.5
+or (if callhub.py was not found in your path, please download this git and ./bin/callhub.py )
+python3 ./bin/callhub.py -i chr10_test.bed -f WT_na -b DKO_na -r 10000 -d 0.5
 ```
 
 Options:
 ```
   -h, --help            show this help message and exit
-  -i <file>, --in=<file> Path to Input HiC file in txt format
-  -f <str>, --foreground_name=<str> Name of condition as foreground.
-  -b <str>, --background_name=<str> Name of condition as background.
-  -r <int>, --resolution=<int>      Resolution of HiC txt
-  -d <float>, --filtered_density=<float> Density cutoff for hub shriking.
-  -g <int>, --gap_size=<int> Gap Size to stitch adjacent node
+  -i <file>, --in=<file>
+                        Path to Input HiC file in txt format
+  -f <str>, --foreground_name=<str>
+                        Name of condition as foreground.
+  -b <str>, --background_name=<str>
+                        Name of condition as background.
+  -r <int>, --resolution=<int>
+                        Resolution of HiC txt
+  -d <float>, --filtered_density=<float>
+                        Density cutoff for hub shriking.
 ```
 
-Output of Hubs:
+Output can be found at working directory: 
+(Demo output is: /HiC_Hubs/python_package/tests/2704_DKO_na_Diff_hub.txt  or 3106_WT_na_Diff_hub.txt)
 ```
+3106_WT_na_Diff_hub.txt
 0	1	2	hub_name	Num_vertices	pvalue
 chr10	20930000	21060000	chr10:20930000-21060000	11	7.88966007260005e-09
 chr10	19590000	19720000	chr10:19590000-19720000	11	7.809766623341443e-05

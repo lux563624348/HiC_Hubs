@@ -1,5 +1,5 @@
 # NOTE: For Paper Review, please follow the instruction below:
-Latest updated on Feb/14/2021,
+Latest updated on 07/04/2021,
 
 # Comprehensive Network Analysis for HiC
 
@@ -30,15 +30,13 @@ This package requires only a standard computer with enough RAM to support the in
 HicHub mainly depends on the Python scientific stack.
 
 ```
-python <=3.3
+python >=3
 pandas
 numpy
 pybedtools
 python-igraph
 scipy
 ```
-
-If you want to convert .hic to input file faster, please install strawC. Detail: https://github.com/aidenlab/straw
 
 ## Installation Guide
 Recommend to use bioconda for installing.
@@ -51,46 +49,51 @@ python3 -m pip install numpy pandas pybedtools python-igraph scipy
 ```
 https://bioconda.github.io/user/install.html
 ```
-Or
-
 
 ## Example of Running (Demo)
+After installation, type hichub in your command line will return the following UI:
+```
+welcome
+The python env is: 3.7.10 | packaged by conda-forge | (default, Feb 19 2021, 16:07:37)
+[GCC 9.3.0]
+usage: hichub [-h] [-v] {test,diff,convert} ...
+hichub -- A toolset to detect and analyze differential Hubs
+positional arguments:
+  {test,diff,convert}  sub-command help
+    test               Output for test parser
+    diff               Parser for diff hubs
+    convert            Convert multi .hic to txt format --> Format should be:
+                       #chr bin1 bin2 Count
+optional arguments:
+  -h, --help           show this help message and exit
+  -v, --version        show program's version number and exit
+```
+
+diff:
+```
+usage: hichub diff [-h] -i <file> -f <str> -b <str> -r <int> [-p <float>]
+                   [-t <int>]
+hichub diff: error: the following arguments are required: -i/--in, -f/--foreground_name, -b/--background_name, -r/--resolution
+
 Input Format: HiC Interaction in txt format.
 Example of test data can be found in ~/test_data
-%% Convert .hic to required input format
-python3 convert_hic_to_pair.py -i ~/ -n NONE -f test.hic -r 10000
 
+Output can be found at working directory: 
+(Demo output is: /HiC_Hubs/python_package/tests/2704_DKO_na_Diff_hub.txt  or 3106_WT_na_Diff_hub.txt)
 
 ```
+
+convert:
+%% Convert .hic to required input format
+```
+usage: hichub convert [-h] -i <file> [-n <str>] -f <str> -l <str> -r <int>
+hichub convert: error: the following arguments are required: -i/--in, -f/--file_name, -l/--file_label, -r/--resolution
+#Example:
 #chr	bin1	bin2	Cond1	Cond2
 10	3000000	3010000	100	200
 ```
 
-EXAMPLE: 
-```
-%% Find hub by shrinked algorithm
-callhub.py -i chr10_test.bed -f WT_na -b DKO_na -r 10000 -d 0.5
-or (if callhub.py was not found in your path, please download this git and ./bin/callhub.py )
-python3 ./bin/callhub.py -i chr10_test.bed -f WT_na -b DKO_na -r 10000 -d 0.5
-```
 
-Options:
-```
-  -h, --help            show this help message and exit
-  -i <file>, --in=<file>
-                        Path to Input HiC file in txt format
-  -f <str>, --foreground_name=<str>
-                        Name of condition as foreground.
-  -b <str>, --background_name=<str>
-                        Name of condition as background.
-  -r <int>, --resolution=<int>
-                        Resolution of HiC txt
-  -d <float>, --filtered_density=<float>
-                        Density cutoff for hub shriking.
-```
-
-Output can be found at working directory: 
-(Demo output is: /HiC_Hubs/python_package/tests/2704_DKO_na_Diff_hub.txt  or 3106_WT_na_Diff_hub.txt)
 ```
 3106_WT_na_Diff_hub.txt
 0	1	2	hub_name	Num_vertices	pvalue
@@ -99,6 +102,7 @@ chr10	19590000	19720000	chr10:19590000-19720000	11	7.809766623341443e-05
 chr10	80210000	80340000	chr10:80210000-80340000	11	9.520611432439225e-05
 chr10	95890000	96030000	chr10:95890000-96030000	14	0.00015075762147303865
 ```
+
 ## Built With
 
 ## Contributing
